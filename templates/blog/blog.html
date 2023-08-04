@@ -1,0 +1,150 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+
+    {% block content %}
+    <!--================Blog Area =================-->
+    <section class="blog_area section_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-5 mb-lg-0">
+                    <div class="blog_left_sidebar">
+
+                        {% if blogs %}
+                        {% for blog in blogs %}
+                        <article class="blog_item">
+                            <div class="blog_item_img">
+                                <img class="card-img rounded-0" src="{{ blog.image.url }}" alt="">
+                                <a href="#" class="blog_item_date">
+                                    <h3>{{ blog.date.day }}</h3>
+                                    <p>{{ blog.date|date:"F"|slice:":3"}}</p>
+                                </a>
+                            </div>
+
+                            <div class="blog_details">
+                                <a class="d-inline-block" href="{% url 'blog_detail' slug=blog.slug %}">
+                                    <h2>{{ blog.title}}</h2>
+                                </a>
+                                <p>{{ blog.description|truncatewords:20|safe}}</p>
+                                <ul class="blog-info-link">
+                                    <li><a href="#"><i class="far fa-user"></i>{{blog.tag}}</a></li>
+                                    <li><a href="#"><i class="far fa-comments"></i></a></li>
+                                </ul>
+                            </div>
+                        </article>
+                        {% endfor %}
+                        {% else %}
+                            <p>В данный момент нет такого блога</p>
+                        {% endif %}
+
+
+
+                        <nav class="blog-pagination justify-content-center d-flex">
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="page-link" aria-label="Previous">
+                                            <i class="ti-angle-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                    <li class="page-item">
+                                        <a href="?page={{ page_obj.number }}" class="page-link">{{ page_obj.paginator.num_pages }}</a>
+                                    </li>
+
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{ page_obj.next_page_number}}" class="page-link" aria-label="Next">
+                                        <i class="ti-angle-right"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form action="{% url 'blog_search' %}">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <label>
+                                            <input type="search" name="search" class="form-control" placeholder='Search Keyword'
+                                                onfocus="this.placeholder = ''"
+                                                onblur="this.placeholder = 'Search Keyword'">
+                                        </label>
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1"
+                                    type="submit">Search</button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Category</h4>
+                            <ul class="list cat-list">
+                                {% for category in categories %}
+                                <li>
+                                    <a href="{% url 'by_category' category.slug %}" class="d-flex">
+                                        <p>{{ category|capfirst }}</p>
+                                    </a>
+                                </li>
+                                {% endfor %}
+
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title">Recent Post</h3>
+                            {% for blog in blogs|slice:":5"%}
+                            <div class="media post_item">
+                                <img src="{{ blog.image.url }}" alt="post" width="70" height="70">
+                                <div class="media-body">
+                                    <a href="{% url 'blog_detail' blog.slug %}">
+                                        <h3>{{ blog.title }}</h3>
+                                    </a>
+                                    <p>{{ blog.date }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </aside>
+                        <aside class="single_sidebar_widget tag_cloud_widget">
+                            <h4 class="widget_title">Tag Clouds</h4>
+                            <ul class="list">
+                                {% for tag in tags %}
+                                    <li>
+                                        <a href="{% url 'by_tag' tag.slug %}">{{ tag.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </aside>
+
+
+
+
+                        <aside class="single_sidebar_widget newsletter_widget">
+                            <h4 class="widget_title">Newsletter</h4>
+
+                            <form action="#">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1"
+                                    type="submit">Subscribe</button>
+                            </form>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+    {% endblock %}
+
+

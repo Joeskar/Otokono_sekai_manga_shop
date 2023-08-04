@@ -1,0 +1,172 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+   <!--================Blog Area =================-->
+   <section class="blog_area single-post-area section_padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                     <img class="img-fluid" src="{{ blog.image.url }}" alt="">
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{ blog.title }}</h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        <li><i class="far fa-user"></i>admin</li>
+                        <li><a href="#"><i class="far fa-comments"></i> {{ comments.count|stringformat:"02d" }} Comments</a></li>
+                     </ul>
+                     <p class="text-widths">
+                        {{ blog.description|safe }} {# safe для отображение текста в формате html #}
+                     </p>
+                  </div>
+               </div>
+               <div class="navigation-top">
+                  <div class="d-sm-flex justify-content-between text-center">
+                     <p class="like-info"><span class="align-middle"><i class="far fa-heart"></i></span> Lily and 4
+                        people like this</p>
+                     <div class="col-sm-4 text-center my-2 my-sm-0">
+                        <!-- <p class="comment-count"><span class="align-middle"><i class="far fa-comment"></i></span> 06 Comments</p> -->
+                     </div>
+                     <ul class="social-icons">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
+                        <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="comments-area">
+                  <h4>{{ comments.count|stringformat:"02d"}} Comments</h4>
+                   {% if comments %}
+                       {% for comment in comments %}
+                          <div class="comment-list">
+                             <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                   <div class="thumb">
+                                      <img src="../../pillowmart/img/comment/comment_3.png" alt="">
+                                   </div>
+                                    <div class="desc">
+                                      <p class="comment">
+                                         {{ comment.content }}
+                                      </p>
+                                      <div class="d-flex justify-content-between">
+                                         <div class="d-flex align-items-center">
+                                            <h5>
+                                                {{ comment.author }}
+                                            </h5>
+                                            <p class="date">{{ comment.created_at }}</p>
+                                         </div>
+                                      </div>
+                                    </div>
+                                </div>
+                             </div>
+                          </div>
+                       {% endfor %}
+                   {% else %}
+                       <p>В данный момент нет комментариев</p>
+                   {% endif %}
+               </div>
+
+
+
+
+
+
+
+
+
+
+               <div class="comment-form">
+                  <h4>Leave a Reply</h4>
+                  <form class="form-contact comment_form" action="" method="post">
+                      {% csrf_token %}
+                     {{ form.as_p}}
+                     <div class="form-group mt-3">
+                        <button type="submit" class="btn_3 button-contactForm">Send Message</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-lg-4">
+               <div class="blog_right_sidebar">
+                  <aside class="single_sidebar_widget search_widget">
+                     <form action="#">
+                        <div class="form-group">
+                           <div class="input-group mb-3">
+                              <input type="text" class="form-control" placeholder='Search Keyword'
+                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                              <div class="input-group-append">
+                                 <button class="btn" type="button"><i class="ti-search"></i></button>
+                              </div>
+                           </div>
+                        </div>
+                        <button class="button rounded-0 primary-bg text-white w-100 btn_1" type="submit">Search</button>
+                     </form>
+                  </aside>
+                  <aside class="single_sidebar_widget post_category_widget">
+                     <h4 class="widget_title">Category</h4>
+                     <ul class="list cat-list">
+                         {% for category in categories %}
+                        <li>
+                           <a href="{% url 'by_category' category.slug %}" class="d-flex">
+                              <p>{{ category.name }}</p>
+                              <p>({{ category.count|stringformat:"02d" }})</p>
+                           </a>
+                        </li>
+                         {% endfor %}
+
+                     </ul>
+                  </aside>
+                  <aside class="single_sidebar_widget popular_post_widget">
+                     <h3 class="widget_title">Recent Post</h3>
+                      {% for blog in blogs %}
+                            <div class="media post_item">
+                                <img src="{{ blog.image.url }}" alt="post"  width="70" height="70">
+                                <div class="media-body">
+                                   <a href="{% url 'blog_detail' blog.slug %}">
+                                      <h3>{{ blog.title }}</h3>
+                                   </a>
+                                   <p>{{ blog.date }}</p>
+                                </div>
+                          </div>
+                      {% endfor %}
+                  </aside>
+                  <aside class="single_sidebar_widget tag_cloud_widget">
+                     <h4 class="widget_title">Tag Clouds</h4>
+                     <ul class="list">
+                         {% for tag in tags %}
+                            <li>
+                                <a href="{% url 'by_tag' tag.slug %}">{{ tag.name }}</a>
+                            </li>
+                         {% endfor %}
+                     </ul>
+                  </aside>
+
+                  <aside class="single_sidebar_widget newsletter_widget">
+                     <h4 class="widget_title">Newsletter</h4>
+                     <form action="{% url 'blog_detail' blog.slug %}" method="post">
+
+                        <button class="button rounded-0 primary-bg text-white w-100 btn_1"
+                           type="submit">Subscribe</button>
+                     </form>
+                  </aside>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!--================Blog Area end =================-->
+{% endblock %}
