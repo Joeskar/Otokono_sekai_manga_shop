@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import OrderItem
+from apps.cart.models import OrderItem
 
 
 class OrderForm(forms.ModelForm):
