@@ -35,7 +35,7 @@ class ByCategoryView(DataMixin, ListView):
 
     def get_queryset(self):
         category_slug = self.kwargs['category_slug']
-        category = ProductCategory.objects.get(slug=category_slug)
+        category = ProductCategory.objects.get_object_or_404(slug=category_slug)
         return Products.objects.filter(category=category)
 
     def get_context_data(self, **kwargs):
@@ -67,7 +67,7 @@ class ProductSearchView(DataMixin, ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Products.objects.filter(name__icontains=self.request.GET.get("search"))
+        return Products.objects.filter(name__icontains=self.request.GET.get_object_or_404("search"))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
