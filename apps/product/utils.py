@@ -1,4 +1,4 @@
-from .models import Products, ProductCategory
+from apps.product.models import ProductCategory
 
 
 class DataMixin:
