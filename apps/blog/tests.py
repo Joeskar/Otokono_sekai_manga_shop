@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import *
+from apps.blog.models import BlogCategory, BlogTags, Blog, CommentBlog
+from apps.user.models import CustomUser
 
 
 class BaseTestCase(TestCase):
