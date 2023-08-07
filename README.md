@@ -22,7 +22,7 @@
 
 ##### 3) Создать виртуальное окружение
 
-    cd inet_magaz
+    cd config
     
     python -m venv venv
 
