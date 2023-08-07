@@ -4,9 +4,9 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import FormView
 
-from .models import CartItem, OrderItem
-from .forms import OrderForm
-from ..product.models import Products
+from apps.cart.models import CartItem, OrderItem
+from apps.cart.forms import OrderForm
+from apps.product.models import Products
 
 
 class AddToCartView(View):
