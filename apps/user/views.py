@@ -34,7 +34,7 @@ class LoginUser(DataMixin, LoginView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def form_valid(self, form):
-        remember_me = form.cleaned_data.get('remember_me')
+        remember_me = form.cleaned_data.get_object_or_404('remember_me')
 
         if not remember_me:
             self.request.session.set_expiry(0)
