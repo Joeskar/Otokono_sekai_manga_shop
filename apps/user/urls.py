@@ -1,7 +1,6 @@
 from django.urls import path
 
-from apps.product.views import index
-from .views import *
+from apps.user.views import *
 
 urlpatterns = [
     path('register/', RegisterUser.as_view(), name='register'),
