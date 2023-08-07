@@ -35,7 +35,7 @@ class ByCategoryView(CommonContextMixin, ListView):
 
     def get_queryset(self):
         category_slug = self.kwargs['category_slug']
-        category = BlogCategory.objects.get(slug=category_slug)
+        category = BlogCategory.objects.get_object_or_404(slug=category_slug)
         return Blog.objects.filter(category=category)
 
     def get_context_data(self, **kwargs):
@@ -53,7 +53,7 @@ class ByTagView(CommonContextMixin, ListView):
 
     def get_queryset(self):
         tag_slug = self.kwargs['tag_slug']
-        tag = BlogTags.objects.get(slug=tag_slug)
+        tag = BlogTags.objects.get_object_or_404(slug=tag_slug)
         return Blog.objects.filter(tags=tag)
 
     def get_context_data(self, **kwargs):
@@ -70,7 +70,7 @@ class BlogSearchView(CommonContextMixin, ListView):
     context_object_name = 'blogs'
 
     def get_queryset(self):
-        query = self.request.GET.get('search')
+        query = self.request.GET.get_object_or_404('search')
         queryset = Blog.objects.filter(title__icontains=query)
         return queryset
 
