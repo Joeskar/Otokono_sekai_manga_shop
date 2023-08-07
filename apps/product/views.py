@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
-from .models import *
-from .utils import DataMixin
+from apps.product.models import Products, ProductCategory, ProductImages
+from apps.product.utils import DataMixin
 
 
 def index(request):
