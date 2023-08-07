@@ -56,7 +56,7 @@ class BlogTags(models.Model):
 class CommentBlog(models.Model):
     """
      Создает модель комментария для блога
-     """
+    """
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     content = models.TextField(verbose_name='Содержание комментария')
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Автор комментария')
