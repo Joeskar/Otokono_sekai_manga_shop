@@ -1,5 +1,5 @@
 from django.db.models import Count
-from .models import BlogCategory, BlogTags
+from apps.blog.models import BlogCategory, BlogTags
 
 
 class CommonContextMixin:
