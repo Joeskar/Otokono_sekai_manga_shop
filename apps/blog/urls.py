@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
 
-from .views import *
+from apps.blog.views import index, BlogListView, BlogSearchView, ByCategoryView, ByTagView, BlogDetailView
 
 urlpatterns = [
     path('', index, name='main_page'),
