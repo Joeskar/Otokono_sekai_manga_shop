@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
 
-from .views import *
+from apps.product.views import TrendProductListView, ProductListView, ByCategoryView, ProductSearchView, ProductDetailView
 
 urlpatterns = [
     path('', TrendProductListView.as_view(), name='homepage'),
