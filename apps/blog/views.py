@@ -5,9 +5,9 @@ from django.views.generic.edit import FormMixin
 from django.views.generic.list import ListView
 from django.db.models import Count
 
-from .forms import CommentForm
-from .models import Blog, CommentBlog, BlogCategory, BlogTags
-from .utils import CommonContextMixin
+from apps.blog.forms import CommentForm
+from apps.blog.models import Blog, CommentBlog, BlogCategory, BlogTags
+from apps.blog.utils import CommonContextMixin
 
 
 def index(request):
